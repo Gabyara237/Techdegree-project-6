@@ -1,12 +1,12 @@
 package com.teamtreehouse.techdegrees.model;
 
-public class Todo {
+public class ToDo {
 
     private int id;
     private String name;
     private boolean isCompleted;
 
-    public Todo(boolean isCompleted, String name) {
+    public ToDo(boolean isCompleted, String name) {
         this.isCompleted = isCompleted;
         this.name = name;
     }
@@ -27,7 +27,7 @@ public class Todo {
         this.name = name;
     }
 
-    public boolean isCompleted() {
+    public boolean getIsCompleted() {
         return isCompleted;
     }
 
