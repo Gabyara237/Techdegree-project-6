@@ -45,7 +45,32 @@ public class Sql2oToDoDaoTest {
         dao.add(toDo);
         assertEquals(1,dao.findAll().size());
     }
-    
+
+    @Test
+    void deletingToDoFromId() throws DaoException {
+        ToDo toDo1 = new ToDo(true, "ToDo1");
+        ToDo toDo2 = new ToDo(false,"ToDo2");
+
+        dao.add(toDo1);
+        dao.add(toDo2);
+        dao.delete(toDo1.getId());
+
+        assertEquals(1,dao.findAll().size());
+    }
+
+    @Test
+    void UpdateToDo() throws DaoException {
+        ToDo toDo = newTestToDo();
+        dao.add(toDo);
+        String originalName = toDo.getName();
+        toDo.setName("Update Test");
+        dao.update(toDo);
+
+        assertNotEquals(originalName,toDo.getName());
+        assertEquals("Update Test", toDo.getName());
+
+    }
+
     private static ToDo newTestToDo() {
         return new ToDo(true, "Dance");
     }

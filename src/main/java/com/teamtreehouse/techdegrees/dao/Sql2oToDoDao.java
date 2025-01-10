@@ -48,7 +48,6 @@ public class Sql2oToDoDao implements TodoDao{
         }catch (Sql2oException ex){
             throw new DaoException(ex, "Problem updating toDo");
         }
-
     }
 
     @Override
