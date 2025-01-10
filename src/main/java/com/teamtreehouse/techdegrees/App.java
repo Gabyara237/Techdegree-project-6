@@ -4,6 +4,7 @@ package com.teamtreehouse.techdegrees;
 import com.google.gson.Gson;
 import com.teamtreehouse.techdegrees.dao.Sql2oToDoDao;
 import com.teamtreehouse.techdegrees.dao.TodoDao;
+import com.teamtreehouse.techdegrees.model.ToDo;
 import org.sql2o.Sql2o;
 
 import static spark.Spark.*;
@@ -30,6 +31,16 @@ public class App {
         Gson gson = new Gson();
 
         get("/api/v1/todos", "application/json", (req, resp) -> todoDao.findAll(),gson::toJson);
+
+        
+        post("/api/v1/todos", "application/json",(req, res) ->{
+
+            ToDo toDo = gson.fromJson(req.body(), ToDo.class);
+            todoDao.add(toDo);
+            res.status(201);
+            return toDo;
+        }, gson::toJson);
+
 
 
     }
