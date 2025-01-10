@@ -31,12 +31,12 @@ public class Sql2oToDoDaoTest {
     }
 
     @Test
-    public void addingCourseSetsId() throws Exception {
+    public void addingToDoSetsId() throws Exception {
         ToDo todo = newTestToDo();
-        int originalCourseId = todo.getId();
+        int originalToDoId = todo.getId();
 
         dao.add(todo);
-        assertNotEquals(originalCourseId, todo.getId());
+        assertNotEquals(originalToDoId, todo.getId());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class Sql2oToDoDaoTest {
         dao.add(toDo);
         assertEquals(1,dao.findAll().size());
     }
-
+    
     private static ToDo newTestToDo() {
         return new ToDo(true, "Dance");
     }
