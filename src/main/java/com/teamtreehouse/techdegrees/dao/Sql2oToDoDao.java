@@ -19,11 +19,11 @@ public class Sql2oToDoDao implements TodoDao{
 
     @Override
     public void add(ToDo todo) throws DaoException {
-        String sql = "INSERT INTO tododb(name, is_completed) VALUES (:name, :is_completed)";
+        String sql = "INSERT INTO tododb(name, isCompleted) VALUES (:name, :isCompleted)";
         try (Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql)
                     .addParameter("name", todo.getName())
-                    .addParameter("is_completed", todo.getIsCompleted())
+                    .addParameter("isCompleted", todo.getIsCompleted())
                     .executeUpdate()
                     .getKey();
             todo.setId(id);
@@ -36,11 +36,11 @@ public class Sql2oToDoDao implements TodoDao{
 
     @Override
     public void update(ToDo todo) throws DaoException {
-        String sql = "UPDATE tododb SET name = :name, is_completed = :is_completed WHERE id = :id";
+        String sql = "UPDATE tododb SET name = :name, isCompleted  = :isCompleted WHERE id = :id";
         try (Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("name",todo.getName())
-                    .addParameter("is_completed",todo.getIsCompleted())
+                    .addParameter("isCompleted",todo.getIsCompleted())
                     .addParameter("id",todo.getId())
                     .executeUpdate()
                     .getResult();
@@ -68,7 +68,7 @@ public class Sql2oToDoDao implements TodoDao{
     @Override
     public List<ToDo> findAll() {
         try (Connection con = sql2o.open()){
-            return con.createQuery("SELECT id, name, is_completed AS isCompleted FROM tododb")
+            return con.createQuery("SELECT id, name, isCompleted FROM tododb")
                     .executeAndFetch(ToDo.class);
 
         }

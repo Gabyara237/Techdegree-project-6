@@ -4,6 +4,7 @@ public class ToDo {
 
     private int id;
     private String name;
+
     private boolean isCompleted;
 
     public ToDo(boolean isCompleted, String name) {

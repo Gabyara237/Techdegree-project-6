@@ -4,6 +4,7 @@ package com.teamtreehouse.techdegrees;
 import com.google.gson.Gson;
 import com.teamtreehouse.techdegrees.dao.Sql2oToDoDao;
 import com.teamtreehouse.techdegrees.dao.TodoDao;
+import com.teamtreehouse.techdegrees.exc.ApiError;
 import com.teamtreehouse.techdegrees.model.ToDo;
 import org.sql2o.Sql2o;
 
@@ -32,7 +33,7 @@ public class App {
 
         get("/api/v1/todos", "application/json", (req, resp) -> todoDao.findAll(),gson::toJson);
 
-        
+
         post("/api/v1/todos", "application/json",(req, res) ->{
 
             ToDo toDo = gson.fromJson(req.body(), ToDo.class);
@@ -42,6 +43,30 @@ public class App {
         }, gson::toJson);
 
 
+        put("/api/v1/todos/:id", "application/json",(req, res) -> {
+
+            int id = Integer.parseInt(req.params("id"));
+            ToDo newData;
+
+            ToDo toDo = todoDao.findById(id);
+
+            if ( toDo == null){
+                throw new ApiError(404,"Could not find toDo with id: " + id);
+            }
+
+            newData = gson.fromJson(req.body(),ToDo.class);
+
+            if(newData.getName() !=null){
+              toDo.setName(newData.getName());
+            }
+            toDo.setCompleted(newData.getIsCompleted());
+
+            todoDao.update(toDo);
+
+            res.status(200);
+            return toDo;
+
+        },gson::toJson);
 
     }
 
