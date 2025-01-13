@@ -68,6 +68,20 @@ public class App {
 
         },gson::toJson);
 
+        delete("/api/v1/todos/:id", "application/json",(req, res) ->{
+            int id = Integer.parseInt(req.params("id"));
+            ToDo toDo = todoDao.findById(id);
+
+            if(toDo ==null){
+                throw new ApiError(400, "ToDo not Found");
+            }
+            todoDao.delete(id);
+            res.status(204);
+            return "";
+
+        });
+
     }
+
 
 }
