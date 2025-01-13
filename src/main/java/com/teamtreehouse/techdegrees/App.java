@@ -31,9 +31,11 @@ public class App {
         TodoDao todoDao =  new Sql2oToDoDao(sql2o);
         Gson gson = new Gson();
 
+        // Route to display all items stored in the database
         get("/api/v1/todos", "application/json", (req, resp) -> todoDao.findAll(),gson::toJson);
 
 
+        // Route to add an item to the database
         post("/api/v1/todos", "application/json",(req, res) ->{
 
             ToDo toDo = gson.fromJson(req.body(), ToDo.class);
@@ -43,6 +45,7 @@ public class App {
         }, gson::toJson);
 
 
+        // Route to update an item in the database
         put("/api/v1/todos/:id", "application/json",(req, res) -> {
 
             int id = Integer.parseInt(req.params("id"));
@@ -68,6 +71,7 @@ public class App {
 
         },gson::toJson);
 
+        // Route to delete an item in the database
         delete("/api/v1/todos/:id", "application/json",(req, res) ->{
             int id = Integer.parseInt(req.params("id"));
             ToDo toDo = todoDao.findById(id);

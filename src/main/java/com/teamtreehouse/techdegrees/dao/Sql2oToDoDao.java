@@ -17,6 +17,7 @@ public class Sql2oToDoDao implements TodoDao{
     }
 
 
+    // Implementation to add an element in the database
     @Override
     public void add(ToDo todo) throws DaoException {
         String sql = "INSERT INTO tododb(name, isCompleted) VALUES (:name, :isCompleted)";
@@ -34,6 +35,7 @@ public class Sql2oToDoDao implements TodoDao{
 
     }
 
+    //Implementation to update an element to the database
     @Override
     public void update(ToDo todo) throws DaoException {
         String sql = "UPDATE tododb SET name = :name, isCompleted  = :isCompleted WHERE id = :id";
@@ -50,6 +52,7 @@ public class Sql2oToDoDao implements TodoDao{
         }
     }
 
+    // Implementation to delete an element in the database
     @Override
     public void delete(int id) throws DaoException{
         String sql = "DELETE FROM tododb WHERE id = :id";
@@ -65,6 +68,7 @@ public class Sql2oToDoDao implements TodoDao{
 
     }
 
+    // Implementation to display all the elements found in the database
     @Override
     public List<ToDo> findAll() {
         try (Connection con = sql2o.open()){
@@ -74,6 +78,7 @@ public class Sql2oToDoDao implements TodoDao{
         }
     }
 
+    // Implementation to find an element in the database by its id
     @Override
     public ToDo findById(int id) {
         try(Connection con = sql2o.open()){
