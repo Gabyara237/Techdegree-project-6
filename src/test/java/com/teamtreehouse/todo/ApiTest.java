@@ -15,6 +15,7 @@ import spark.Spark;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -68,6 +69,18 @@ public class ApiTest {
         ApiResponse res = client.request("DELETE","/api/v1/todos/"+ toDo.getId());
 
         assertEquals(204,res.getStatus());
+    }
+
+    @Test
+    void updatingToDoReturnEditedStatus() throws DaoException {
+        ToDo toDo = newTestToDo();
+        todoDao.add(toDo);
+        Map<String, Object> values = new HashMap<>();
+        values.put("name","UpdatingTest");
+        values.put("isCompleted",false);
+        ApiResponse res = client.request("PUT","/api/v1/todos/"+ toDo.getId(), gson.toJson(values));
+
+        assertEquals(200,res.getStatus());
     }
 
     private static ToDo newTestToDo() {
